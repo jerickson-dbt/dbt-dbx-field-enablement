@@ -12,6 +12,15 @@ version: 2
 
 models:
 
+  - name: time_spine_daily
+    description: A time spine with one row per day, ranging from 5 years in the past to 30 days into the future.
+    time_spine:
+      standard_granularity_column: date_day  # The base column used for time joins
+    columns:
+      - name: date_day
+        description: The base date column for daily granularity
+        granularity: day
+  
   - name: dim_customers
     description: >
       PUBLIC model. Customer dimension with LTV metrics and segmentation. Consumed by: marketing (segmentation), finance (revenue attribution). Contract enforced — column changes are a breaking change for all consumers. Column descriptions are persisted to Unity Catalog via dbt-databricks adapter, making them available to Genie without manual copy-paste.
