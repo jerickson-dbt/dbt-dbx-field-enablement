@@ -14,10 +14,6 @@ macro-paths:    ["macros"]
 target-path:  "target"
 clean-targets: ["target", "dbt_packages"]
 
-vars:
-  source_catalog: "{{ env_var('DBT_CATALOG', 'enablement') }}"
-  source_schema: "{{ env_var('DBT_SCHEMA', 'ecommerce_justin_erickson') }}"
-
 models:
   platform:
     staging:

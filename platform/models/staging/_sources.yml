@@ -2,8 +2,8 @@ version: 2
 
 sources:
   - name: ecommerce_raw
-    catalog: "{{ var('source_catalog', 'enablement') }}"
-    schema: "{{ var('source_schema', 'ecommerce_justin_erickson') }}"
+    catalog: "{{ env_var('DBT_CATALOG', 'enablement') }}"
+    schema: "{{ env_var('DBT_SCHEMA', 'ecommerce_justin_erickson') }}"
     description: "Raw e-commerce source tables loaded into Unity Catalog via setup notebook."
     tables:
       - name: raw_customers
