@@ -14,7 +14,7 @@ platform:
     dev:
       type: databricks
       catalog: "{{ env_var('DBT_CATALOG', 'enablement') }}"
-      schema: "{{ env_var('DBT_SCHEMA', 'ecommerce') }}"
+      schema: "{{ env_var('DBT_SCHEMA', 'ecommerce_justin_erickson') }}"
       host: "{{ env_var('DATABRICKS_HOST') }}"
       http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}"
       # User-to-Machine OAuth for interactive development
@@ -27,7 +27,7 @@ platform:
     prod:
       type: databricks
       catalog: "{{ env_var('DBT_CATALOG', 'enablement') }}"
-      schema: "{{ env_var('DBT_SCHEMA', 'ecommerce') }}"
+      schema: "{{ env_var('DBT_SCHEMA', 'ecommerce_justin_erickson') }}"
       host: "{{ env_var('DATABRICKS_HOST') }}"
       http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}"
       # Machine-to-Machine OAuth for CI/CD and scheduled runs

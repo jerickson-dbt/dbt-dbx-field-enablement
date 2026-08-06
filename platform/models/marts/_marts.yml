@@ -105,6 +105,8 @@ models:
     semantic_model:
       enabled: true
       name: dim_customers
+    agg_time_dimension: created_date
+
     metrics:
       - name: total_customers
         label: "Total Customers"
@@ -188,19 +190,6 @@ models:
         - name: is_active
           type: categorical
           expr: cast(is_active as string)
-    metrics:
-      - name: total_products
-        label: "Total Products"
-        description: "Distinct count of all products in the catalog."
-        type: simple
-        agg: count_distinct
-        expr: product_id
-      - name: avg_product_price
-        label: "Average Product Price (USD)"
-        description: "Average list price across all products in the catalog."
-        type: simple
-        agg: average
-        expr: unit_price
   - name: fct_orders
     description: >
       PUBLIC model. Order fact table enriched with item counts and payment totals. Consumed by: finance (revenue), marketing (customer activity). Contract enforced — this is the canonical order grain for all downstream consumers.
@@ -285,6 +274,9 @@ models:
     semantic_model:
       enabled: true
       name: fct_orders
+    agg_time_dimension: order_date
+
+
     metrics:
       - name: total_revenue
         label: "Total Revenue (USD)"
