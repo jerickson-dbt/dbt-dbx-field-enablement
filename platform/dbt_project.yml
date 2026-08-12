@@ -1,4 +1,4 @@
-name: platform
+name: databricks_platform
 version: '1.0.0'
 
 # dbt Fusion (Rust engine) — no config-version key
