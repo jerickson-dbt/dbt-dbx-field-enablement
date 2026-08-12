@@ -2,7 +2,7 @@
 -- Cross-project ref from platform project
 
 with orders as (
-    select * from {{ ref('platform', 'fct_orders') }}
+    select * from {{ ref('databricks_platform', 'fct_orders') }}
 ),
 
 final as (

@@ -2,11 +2,11 @@
 -- Cross-project refs from platform project — demonstrates multi-table Mesh refs
 
 with orders as (
-    select * from {{ ref('platform', 'fct_orders') }}
+    select * from {{ ref('databricks_platform', 'fct_orders') }}
 ),
 
 products as (
-    select * from {{ ref('platform', 'dim_products') }}
+    select * from {{ ref('databricks_platform', 'dim_products') }}
 ),
 
 -- We need order items to link orders to products.

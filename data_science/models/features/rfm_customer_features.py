@@ -17,8 +17,8 @@ def model(dbt, session):
 
     # Cross-project ref — validated at compile time by dbt Mesh.
     # If platform renames dim_customers, this build fails immediately.
-    customers = dbt.ref("platform", "dim_customers")
-    orders = dbt.ref("platform", "fct_orders")
+    customers = dbt.ref("databricks_platform", "dim_customers")
+    orders = dbt.ref("databricks_platform", "fct_orders")
 
     # ── Recency: days since last order ─────────────────────────────────────
     recency = (
