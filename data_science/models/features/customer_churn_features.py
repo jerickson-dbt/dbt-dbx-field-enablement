@@ -17,8 +17,8 @@ def model(dbt, session):
     from pyspark.sql import functions as F
     from pyspark.sql.window import Window
 
-    customers = dbt.ref("platform", "dim_customers")
-    orders = dbt.ref("platform", "fct_orders")
+    customers = dbt.ref("databricks_platform", "dim_customers")
+    orders = dbt.ref("databricks_platform", "fct_orders")
 
     # ── Order-level behavioral features ────────────────────────────────────
     order_features = (

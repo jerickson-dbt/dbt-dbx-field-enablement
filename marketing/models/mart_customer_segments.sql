@@ -2,11 +2,11 @@
 -- Cross-project refs from platform project
 
 with customers as (
-    select * from {{ ref('platform', 'dim_customers') }}
+    select * from {{ ref('databricks_platform', 'dim_customers') }}
 ),
 
 orders as (
-    select * from {{ ref('platform', 'fct_orders') }}
+    select * from {{ ref('databricks_platform', 'fct_orders') }}
 ),
 
 customer_recency as (

@@ -21,7 +21,7 @@ def model(dbt, session):
     from pyspark.sql import functions as F
 
     # Cross-project ref — validated at compile time by dbt Mesh.
-    orders = dbt.ref("platform", "fct_orders")
+    orders = dbt.ref("databricks_platform", "fct_orders")
 
     # One row per (customer, payment_method) usage, completed orders only.
     customer_methods = (
