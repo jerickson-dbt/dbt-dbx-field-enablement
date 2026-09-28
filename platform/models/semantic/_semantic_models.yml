@@ -29,9 +29,12 @@ metrics:
     type: ratio
     numerator:
       name: total_orders
+      alias: returned_orders
       filter: "{{ Dimension('order__status') }} = 'returned'"
     denominator:
       name: total_orders
+      alias: all_orders
+
 
   # ── Customer metrics ──────────────────────────────────────────────────────
   - name: revenue_per_customer

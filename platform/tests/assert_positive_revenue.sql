@@ -11,6 +11,7 @@ select
     order_id,
     status,
     amount_paid
-from {{ ref('fct_orders') }}
+from {{ ref('fct_orders', v=1) }}
+
 where status = 'completed'
   and amount_paid <= 0
