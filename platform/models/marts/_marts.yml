@@ -142,12 +142,29 @@ models:
     description: >
       PUBLIC model. Product catalog dimension. Consumed by: finance (revenue by product/category). Contract enforced.
        Semantic model built on dim_products. One row per product. Defines the product grain, category dimension, and pricing measures. This is the authoritative definition of a "product" for all BI and Genie queries.
+    latest_version: 1
+    versions:
+      - v: 1
+        defined_in: dim_products
+      - v: 2
+        defined_in: dim_products_v2
+        columns:
+          - include: all
+            exclude: [product_name]
+          - name: product_display_name
+            description: "Human-readable product name. Renamed from product_name in v1."
+            data_type: string
+            constraints:
+              - type: not_null
     config:
       group: platform_core
       access: public
+      latest_version_pointer:
+        enabled: true
       contract:
         enforced: true
     columns:
+
       - name: product_id
         description: "Unique product identifier. Primary key."
         data_type: integer
