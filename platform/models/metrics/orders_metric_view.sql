@@ -1,7 +1,8 @@
 {{ config(materialized='metric_view') }}
 
 version: 1.1
-source: {{ ref('fct_orders') }}
+source: {{ ref('fct_orders', v=1) }}
+
 comment: >
   E-commerce order metrics, authored and governed by the dbt platform project.
   Mirror of the dbt Semantic Layer metrics in models/semantic/_semantic_models.yml.

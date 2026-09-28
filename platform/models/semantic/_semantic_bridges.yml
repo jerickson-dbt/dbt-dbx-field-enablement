@@ -1,0 +1,129 @@
+version: 2
+
+models:
+  - name: sem_dim_customers
+    description: >
+      Stable Semantic Layer bridge pinned to dim_customers v1. Update this ref only
+      after validating a newer customer model version for semantic compatibility.
+    semantic_model:
+      enabled: true
+      name: dim_customers
+    agg_time_dimension: created_date
+    columns:
+      - name: customer_id
+        entity:
+          type: primary
+          name: customer
+      - name: created_date
+        granularity: day
+        dimension:
+          type: time
+      - name: country
+        dimension:
+          type: categorical
+      - name: customer_segment
+        dimension:
+          type: categorical
+    metrics:
+      - name: total_customers
+        label: "Total Customers"
+        description: "Distinct count of all customers in the system regardless of order activity."
+        type: simple
+        agg: count_distinct
+        expr: customer_id
+      - name: avg_customer_lifetime_value
+        label: "Average Customer Lifetime Value (USD)"
+        description: >
+          Average total_lifetime_value across all customers. Lifetime value is the
+          sum of all successful payments, regardless of order status.
+        type: simple
+        agg: average
+        expr: total_lifetime_value
+      - name: total_lifetime_value
+        description: >
+          Sum of all successful payment amounts across all orders for each customer.
+          Denominated in USD. Revenue is successful payments only.
+        type: simple
+        agg: sum
+        expr: total_lifetime_value
+        hidden: true
+      - name: total_orders_per_customer
+        description: "Total number of orders placed across all customers in scope."
+        type: simple
+        agg: sum
+        expr: number_of_orders
+        hidden: true
+
+  - name: sem_fct_orders
+    description: >
+      Stable Semantic Layer bridge pinned to fct_orders v1. Update this ref only
+      after validating a newer order model version for semantic compatibility.
+    semantic_model:
+      enabled: true
+      name: fct_orders
+    agg_time_dimension: order_date
+    columns:
+      - name: order_id
+        entity:
+          type: primary
+          name: order
+      - name: customer_id
+        entity:
+          type: foreign
+          name: customer
+      - name: order_date
+        granularity: day
+        dimension:
+          type: time
+      - name: status
+        dimension:
+          type: categorical
+      - name: payment_method
+        dimension:
+          type: categorical
+    metrics:
+      - name: total_revenue
+        label: "Total Revenue (USD)"
+        description: >
+          Sum of amount_paid across all orders regardless of status. Includes placed,
+          shipped, completed, and returned orders.
+        type: simple
+        agg: sum
+        expr: amount_paid
+      - name: total_recognised_revenue
+        label: "Total Recognised Revenue (USD)"
+        description: "Revenue from completed orders only."
+        type: simple
+        agg: sum
+        expr: amount_paid
+        filter: "{{ Dimension('order__status') }} = 'completed'"
+      - name: avg_order_value
+        label: "Average Order Value (USD)"
+        description: "Average amount_paid per order across completed orders."
+        type: simple
+        agg: average
+        expr: amount_paid
+      - name: total_orders
+        label: "Total Orders"
+        description: "Count of all orders regardless of status."
+        type: simple
+        agg: count_distinct
+        expr: order_id
+      - name: completed_orders
+        label: "Completed Orders"
+        description: "Count of orders with status = 'completed'."
+        type: simple
+        agg: count_distinct
+        expr: "case when status = 'completed' then order_id end"
+      - name: total_items_sold
+        label: "Total Items Sold"
+        description: "Sum of line items across all orders in scope."
+        type: simple
+        agg: sum
+        expr: number_of_items
+      - name: return_flag
+        description: "Count of returned orders. Use for return rate calculation."
+        type: simple
+        agg: sum
+        expr: "case when status = 'returned' then 1 else 0 end"
+        hidden: true
