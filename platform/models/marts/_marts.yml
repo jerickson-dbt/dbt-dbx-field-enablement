@@ -178,6 +178,20 @@ models:
     versions:
       - v: 1
         defined_in: fct_orders
+        deprecation_date: '2026-10-24'
+      - v: 2
+        defined_in: fct_orders_v2
+        columns:
+          - include: all
+            exclude: [amount_paid]
+          - name: successful_payment_amount
+            description: >
+              Total amount successfully paid for this order (USD). Renamed from
+              amount_paid in v1. Counts only payments with status = 'success'.
+            data_type: decimal(18,2)
+            tests:
+              - not_null
+
     config:
       group: platform_core
       access: public
