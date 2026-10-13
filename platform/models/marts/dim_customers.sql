@@ -14,7 +14,7 @@ final as (
         c.created_date,
         c.country,
         coalesce(co.number_of_orders,     0) as number_of_orders,
-        coalesce(co.total_lifetime_value, cast(0 as decimal(18, 2))) as total_lifetime_value,
+        cast(coalesce(co.total_lifetime_value, 0) as decimal(18, 2)) as total_lifetime_value,
         co.first_order_date,
         co.most_recent_order_date,
         case
