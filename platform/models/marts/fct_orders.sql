@@ -25,8 +25,8 @@ final as (
         o.status,
         o.payment_method,
         coalesce(oi.number_of_items, 0)               as number_of_items,
-        coalesce(oi.items_total,     cast(0 as decimal(18, 2))) as items_total,
-        coalesce(p.amount_paid,      cast(0 as decimal(18, 2))) as amount_paid
+        cast(coalesce(oi.items_total, 0) as decimal(18, 2)) as items_total,
+        cast(coalesce(p.amount_paid, 0) as decimal(18, 2)) as amount_paid
     from orders o
     left join order_items_enriched oi on o.order_id = oi.order_id
     left join payments p on o.order_id = p.order_id

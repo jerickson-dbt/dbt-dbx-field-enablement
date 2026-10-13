@@ -1,4 +1,4 @@
-{{ config(materialized='metric_view') }}
+{{ config(materialized='metric_view', static_analysis='off') }}
 
 version: 1.1
 source: {{ ref('fct_orders', v=1) }}

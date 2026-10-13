@@ -6,16 +6,14 @@ require-dbt-version: [">=1.9.0"]
 
 profile: platform
 
-model-paths:    ["models"]
-seed-paths:     ["seeds"]
-test-paths:     ["tests"]
-macro-paths:    ["macros"]
-
-target-path:  "target"
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
 clean-targets: ["target", "dbt_packages"]
 
 models:
-  platform:
+  databricks_platform:
     staging:
       +materialized: view
       +access: protected
@@ -39,3 +37,5 @@ models:
     metrics:
       +materialized: metric_view
 
+flags:
+  require_generic_test_arguments_property: true
